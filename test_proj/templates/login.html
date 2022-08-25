@@ -1,0 +1,44 @@
+
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+   <link rel="stylesheet" type="text/css" href="{% static 'styles/bootstrap4/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/css/custom.css' %}">
+    <title>Log In</title>
+    <style>
+        body{ background-image : url({% static 'images/OIP.jpg' %});
+         background-size: cover;
+         margin-top : 10%;
+         color : white;
+
+          text-shadow: white 0px 0px 2px;
+          font-size: 16px;
+         }
+         input{
+         float: right;
+         }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2 style="text-align:center; font-family:verdana;">LOGIN</h2>
+    <form action="{% url 'login' %}" method="POST">
+        {% csrf_token %}
+        <fieldset style="margin-left:40%; margin-right:35%; display:block;">
+        <label>Username</label>
+        <input class="form-control" type="text" name="username" placeholder="Enter the username">
+        <p></p>
+         <label>Password</label>
+        <input class="form-control" type="password" name="password" placeholder="Enter the password">
+            <p></p>
+        <br>
+            <br>
+            <input class="btn btn-primary" type="submit" value="Login">
+            New User?<a href="{% url 'register' %}"> Register</a>
+    </form>
+</div>
+
+</body>
+</html>

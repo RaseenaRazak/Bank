@@ -1,0 +1,115 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+     <link rel="stylesheet" type="text/css" href="{% static 'styles/bootstrap4/bootstrap.min.css' %}">
+    <title>Loogged In </title>
+    <style>
+        body{ background-image : url({% static 'images/OIP.jpg' %});
+         background-size: cover;
+         margin-top : 5%;
+         margin-bottom : 5%;
+         margin-left : 10%;
+         color : white;
+          text-shadow: white 0px 0px 2px;
+          font-size: 16px;
+         }
+         h1{
+         text-align : center;
+         }
+        #logout{
+        float : right;
+        }
+    </style>
+
+</head>
+<body>
+
+{% for msg in messages %}
+{{msg}}
+{% endfor %}
+
+<h1>Person Form</h1>
+<br>
+<div class="container">
+<div>
+<form class="form-group" method="post" id="personForm" data-branches-url="{% url 'ajax_load_branches' %}" action="{% url 'person_add' %}">
+
+<!--     <h1>Person Details</h1>-->
+        {% csrf_token %}
+    <fieldset>
+         {{ form.as_p }}
+        <label>Date of Birth</label>
+        <input type="date" name="dob" placeholder="Enter user date of birth"><br><br>
+        <label>Age</label>
+        <input type="text" name="age" placeholder="Enter user age"><br><br>
+        <label>Gender</label><br>
+        <input type="radio" name="gender"><label>Male</label><br>
+        <input type="radio" name="gender"><label>Female</label><br><br>
+        <label>Phone Number</label>
+        <input type="text" name="phone_number" placeholder="Enter user phone_number"><br><br>
+        <label>Mail ID</label>
+        <input type="email" name="mail_id" placeholder="Enter user Mail ID"><br><br>
+            <label>Address</label>
+        <textarea name="address" rows="5" cols="50"placeholder="Enter your address" ></textarea><br><br>
+            <label>Account Type</label>
+            <select name="account" >
+                 <option >--Select---</option>
+                <option >Savings Account</option>
+                <option>Current Account</option>
+            </select>
+            <br><br>
+        <label>Materials Provide</label><br>
+        <input type="checkbox" name="debit"><label>Debit Card</label><br>
+        <input type="checkbox" name="credit"><label>Credit Card</label><br>
+        <input type="checkbox" name="checkbook"><label>Check Book</label><br><br>
+            <input class="btn btn-primary" type="submit" value="Submit">
+    </fieldset>
+
+</form>
+
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+    $("#id_district").change(function () {
+        const url = $("#personForm").attr("data-branches-url");  // get the url of the `load_branches` view
+        const districtId = $(this).val();  // get the selected district ID from the HTML input
+
+        $.ajax({                       // initialize an AJAX request
+            url: url,                    // set the url of the request (= /persons/ajax/load-branches/ )
+            data: {
+                'district_id': districtId       // add the district id to the GET parameters
+            },
+            success: function (data) {   // `data` is the return of the `load_branches` view function
+                $("#id_branch").html(data);  // replace the contents of the branch input with the data that came from the server
+                /*
+
+                let html_data = '<option value="">---------</option>';
+                data.forEach(function (branch) {
+                    html_data += `<option value="${branch.id}">${branch.name}</option>`
+                });
+                console.log(html_data);
+                $("#id_branch").html(html_data);
+
+                */
+            }
+        });
+
+    });
+</script>
+
+</body>
+</html>
+
+<div class="container">
+        <a href="{% url 'logout' %}"><input id="logout" class="btn btn-primary" type="submit" value="Logout"></a>
+        </div>
+
+
+</body>
+</html>

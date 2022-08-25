@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/bootstrap4/bootstrap.min.css' %}">
+    <title>Registration</title>
+    <style>
+        body{ background-image : url({% static 'images/OIP.jpg' %});
+         background-size: cover;
+         margin-top : 10%;
+         color : white;
+          text-shadow: white 0px 0px 2px;
+          font-size: 16px;
+         }
+         input{
+         float: right;
+         }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div>
+        <h2 style="text-align:center; font-family:verdana;">REGISTRATION</h2>
+        <br>
+        <form  action="{% url 'register' %}" method="post" class="form-group">
+        {% csrf_token %}
+        <fieldset style="margin-left:40%; margin-right:35%; display:block;">
+        <p><label>Username</label>
+        <input class="form-control" type="text" name="username" placeholder="Enter the username" required>
+        </p>
+        <p></p>
+        <label>Password</label>
+        <input class="form-control" type="password" name="password" placeholder="Enter the password" required>
+        <p></p>
+        <label>Confirm Password</label>
+        <input class="form-control" type="password" name="c_password" placeholder="Enter the confirm password" required>
+        <p></p><br>
+            <br>
+            <input class ="btn btn-primary" type="submit" value="submit">
+    </fieldset>
+    </form>
+    </div>
+
+</div>
+{% for msg in messages %}
+
+<h3 style="text-align:center; font-family:verdana;">{{msg}}</h3>
+
+{% endfor %}
+</body>
+</html>
